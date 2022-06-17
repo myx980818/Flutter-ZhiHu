@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+// 答案
 class AnswerPage extends StatelessWidget {
 
   const AnswerPage({Key key}) : super(key: key);
@@ -14,7 +14,7 @@ class AnswerPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                  '问题'
+                  '答案'
               ),
             ],
           ),
