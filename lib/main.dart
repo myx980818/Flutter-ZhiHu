@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:zhihuapp/pages/home/index.dart';
+import 'package:zhihuapp/pages/cover/cover.dart';
+import 'package:zhihuapp/pages/ebook/ebook.dart';
+import 'package:zhihuapp/pages/message/notice.dart';
+import 'package:zhihuapp/pages/mine/myCenter.dart';
+
+
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,59 +21,75 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: IndexPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key, this.title}) : super(key: key);
+class IndexPage extends StatefulWidget {
 
-
-  final String title;
+  const IndexPage({Key key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<StatefulWidget> createState() {
+    return _IndexState();
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _IndexState extends State<IndexPage> {
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final List<BottomNavigationBarItem> bottomNavItems = [
+    BottomNavigationBarItem(
+      backgroundColor: Colors.blue,
+      icon: Icon(Icons.home),
+      label: "首页"
+    ),
+    BottomNavigationBarItem(
+        backgroundColor: Colors.blue,
+        icon: Icon(Icons.home),
+        label: "消息"
+    ),
+    BottomNavigationBarItem(
+        backgroundColor: Colors.blue,
+        icon: Icon(Icons.home),
+        label: "购物车"
+    ),
+    BottomNavigationBarItem(
+        backgroundColor: Colors.blue,
+        icon: Icon(Icons.home),
+        label: "个人中心"
+    ),
+  ];
+
+  int currentIndex;
+
+  final pages = [HomePage(), CoverPage(), eBookPage(), MyCenterPage(), NoticePage()];
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-
-        title: Text(widget.title),
+        title: Text("底部导航栏")
       ),
-      body: Center(
-
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: bottomNavItems,
+        currentIndex: currentIndex,
+        type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          _changePage(index);
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      body: pages[currentIndex],
     );
   }
+
+  void _changePage(int index) {
+    if(index != currentIndex) {
+      setState( () => {
+        currentIndex = index
+      });
+    }
+  }
+
 }
+
